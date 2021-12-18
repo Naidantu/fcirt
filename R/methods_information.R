@@ -122,7 +122,6 @@ information.fcirt <- function(x, approach=1, information=1, items=NULL){
     tau <- ParInits[,3]
   }
 
-    iteminfo <- matrix(NA, N, S/2)
     dimension <- extract(x, 'dimension')
     pairmap <- extract(x, 'pairmap')
     theta <- extract(x, 'theta')
@@ -131,6 +130,7 @@ information.fcirt <- function(x, approach=1, information=1, items=NULL){
     theta <- t(theta)
     N <- nrow(theta)
     thdim <- matrix(0,nrow=N,S)
+    iteminfo <- matrix(NA, N, S/2)
       for (i in 1:N) {
         for (j in 1:S) {
           thdim[i,j] <- theta[i,dimension[j]] #d=dimension associated with each statement i
