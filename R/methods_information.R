@@ -1,8 +1,8 @@
 #' @title mfc item and test information
 #' @description This function calculates mfc item and test information.
 #' @param x returned object
-#' @param approach Estimation approaches used for parameters. They can be 1, which is direct approach, and 2, which is two step approach. The default is 1.
-#' @param information Types of information.They can be 1, which is overall item information, and 2, which is overall test information. The default is 1.
+#' @param approach Estimation approaches used for parameters. They can be "direct", which is direct approach, and "two step", which is two step approach. The default is direct approach.
+#' @param information Types of information.They can be "item", which is overall item information, and "test", which is overall test information. The default is overall item information.
 #' @param items The items of which information to be calculated. The default is all the items.
 #' @return Selected item information or overall test information
 #' @examples
@@ -14,7 +14,7 @@
 #' ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
 #' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=5,chains=1)
-#' information(mod, approach=1, information=1, items=1)
+#' information(mod, approach="direct", information="item", items=1)
 #' @export
 information <- function(x, approach, information, items){
   UseMethod("information")
@@ -23,7 +23,7 @@ information <- function(x, approach, information, items){
 
 #' @export
 #' @method information fcirt
-information.fcirt <- function(x, approach=1, information=1, items=NULL){
+information.fcirt <- function(x, approach="direct", information="item", items=NULL){
 
   #unidimensional pairs
   pair.info1 <- function(alpha1,delta1,tau1,theta1,alpha2,delta2,tau2){
@@ -105,7 +105,7 @@ information.fcirt <- function(x, approach=1, information=1, items=NULL){
     return(info)
   }
 
-  if (approach==1){
+  if (approach=="direct"){
     alpha <- extract(x, 'alpha')
     alpha <- alpha[,1]
     S <- length(alpha)
@@ -114,7 +114,7 @@ information.fcirt <- function(x, approach=1, information=1, items=NULL){
     tau <- extract(x, 'tau')
     tau <- tau[,1]
   }
-  if (approach==2){
+  if (approach=="two step"){
     ParInits <- extract(x, 'ParInits')
     alpha <- ParInits[,1]
     S <- length(alpha)
@@ -149,7 +149,7 @@ information.fcirt <- function(x, approach=1, information=1, items=NULL){
         }
       }
       iteminfoavrg <- colMeans(iteminfo)
-      if (information==1){
+      if (information=="item"){
         if (is.null(items)){
           iteminfo <- iteminfoavrg
         }
@@ -157,7 +157,8 @@ information.fcirt <- function(x, approach=1, information=1, items=NULL){
           iteminfo <- iteminfoavrg[items]
         }
         ret <- iteminfo
-      }else{
+      }
+      if (information=="test"){
         testinfo <- sum(iteminfoavrg)
         ret <- testinfo
       }

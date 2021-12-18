@@ -9,9 +9,9 @@ information(x, approach, information, items)
 \arguments{
 \item{x}{returned object}
 
-\item{approach}{Estimation approaches used for parameters. They can be 1, which is direct approach, and 2, which is two step approach. The default is 1.}
+\item{approach}{Estimation approaches used for parameters. They can be "direct", which is direct approach, and "two step", which is two step approach. The default is direct approach.}
 
-\item{information}{Types of information.They can be 1, which is overall item information, and 2, which is overall test information. The default is 1.}
+\item{information}{Types of information.They can be "item", which is overall item information, and "test", which is overall test information. The default is overall item information.}
 
 \item{items}{The items of which information to be calculated. The default is all the items.}
 }
@@ -30,5 +30,5 @@ ind <- c(1,2,3,4)
 ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
 ParInits <- matrix(ParInits, ncol = 3)
 mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=5,chains=1)
-information(mod, approach=1, information=1, items=1)
+information(mod, approach="direct", information="item", items=1)
 }
