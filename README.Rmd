@@ -82,9 +82,9 @@ bayesplot(x=mod, pars='alpha', plot='trace', inc_warmup=FALSE)
 
 ## Step 5: Item information 
 # 5.1 Obtain item information for item 1-3
-OII <- information(x=mod, approach=1, information=1, items=1:3)
+OII <- information(x=mod, approach="direct", information="item", items=1:3)
 OII
 # 5.2 Obtain test information 
-OTI <- information(x=mod, approach=1, information=2)
+OTI <- information(x=mod, approach="direct", information="test")
 OTI
 ```
