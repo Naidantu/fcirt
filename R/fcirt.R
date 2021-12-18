@@ -87,7 +87,9 @@ fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NU
                           #Cor.est=Cor_ES,
                           Data=fcirt.Data,
                           Fit=fcirt,
-                          Dimension=dimension)
+                          Dimension=dimension,
+                          Pairmap=pairmap,
+                          ParInits=ParInits)
     }
   }
 

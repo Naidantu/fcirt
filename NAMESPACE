@@ -2,9 +2,11 @@
 
 S3method(bayesplot,fcirt)
 S3method(extract,fcirt)
+S3method(information,fcirt)
 export(bayesplot)
 export(extract)
 export(fcirt)
+export(information)
 import(Rcpp)
 import(methods)
 importFrom(rstan,sampling)
