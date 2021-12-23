@@ -4,12 +4,14 @@
 \alias{information}
 \title{mfc item and test information}
 \usage{
-information(x, approach, information, items)
+information(x, approach, theta, information, items)
 }
 \arguments{
 \item{x}{returned object}
 
 \item{approach}{Estimation approaches used for parameters. They can be "direct", which is direct approach, and "two step", which is two step approach. The default is direct approach.}
+
+\item{theta}{Type of theta values used. They can be "quadrature", which is -3, -2.9, -2.8, -2.7...2.9, 3, and "estimated", which is estimated theta values. The default is quadrature.}
 
 \item{information}{Types of information.They can be "item", which is overall item information, and "test", which is overall test information. The default is overall item information.}
 
@@ -30,5 +32,5 @@ ind <- c(1,2,3,4)
 ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
 ParInits <- matrix(ParInits, ncol = 3)
 mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=5,chains=1)
-information(mod, approach="direct", information="item", items=1)
+information(mod, approach="direct", theta="quadrature", information="item", items=1)
 }

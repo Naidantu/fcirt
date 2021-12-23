@@ -2,6 +2,7 @@
 #' @description This function calculates mfc item and test information.
 #' @param x returned object
 #' @param approach Estimation approaches used for parameters. They can be "direct", which is direct approach, and "two step", which is two step approach. The default is direct approach.
+#' @param theta Type of theta values used. They can be "quadrature", which is -3, -2.9, -2.8, -2.7...2.9, 3, and "estimated", which is estimated theta values. The default is quadrature.
 #' @param information Types of information.They can be "item", which is overall item information, and "test", which is overall test information. The default is overall item information.
 #' @param items The items of which information to be calculated. The default is all the items.
 #' @return Selected item information or overall test information
@@ -14,16 +15,16 @@
 #' ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
 #' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=5,chains=1)
-#' information(mod, approach="direct", information="item", items=1)
+#' information(mod, approach="direct", theta="quadrature", information="item", items=1)
 #' @export
-information <- function(x, approach, information, items){
+information <- function(x, approach, theta, information, items){
   UseMethod("information")
 }
 
 
 #' @export
 #' @method information fcirt
-information.fcirt <- function(x, approach="direct", information="item", items=NULL){
+information.fcirt <- function(x, approach="direct", theta="quadrature", information="item", items=NULL){
 
   #unidimensional pairs
   pair.info1 <- function(alpha1,delta1,tau1,theta1,alpha2,delta2,tau2){
@@ -122,34 +123,55 @@ information.fcirt <- function(x, approach="direct", information="item", items=NU
     tau <- ParInits[,3]
   }
 
-    dimension <- extract(x, 'dimension')
-    pairmap <- extract(x, 'pairmap')
+  dimension <- extract(x, 'dimension')
+  pairmap <- extract(x, 'pairmap')
+
+  if (theta=="quadrature"){
+    theta <- matrix(rep(seq(-3,3,6/60),2), nrow = 61, ncol = 2)
+    N <- nrow(theta)
+    iteminfo <- matrix(NA, N, S/2)
+    for (j in 1:N){
+      for (i in 1:(S/2)){
+        if (dimension[(2*i-1)]!=dimension[2*i]){
+          iteminfo[j, i] <- pair.info2(alpha[(2*i-1)], delta[(2*i-1)], tau[(2*i-1)], theta[j, 1],
+                                       alpha[2*i], delta[2*i], tau[2*i], theta[j, 2])
+        }
+        if (dimension[(2*i-1)]==dimension[2*i]){
+          iteminfo[j, i] <- pair.info1(alpha[(2*i-1)], delta[(2*i-1)], tau[(2*i-1)], theta[j, 1],
+                                       alpha[2*i], delta[2*i], tau[2*i])
+        }
+      }
+    }
+  }
+  if (theta=="estimated"){
     theta <- extract(x, 'theta')
     theta <- theta[,1]
     theta <- matrix(theta, nrow=max(dimension))
     theta <- t(theta)
     N <- nrow(theta)
     thdim <- matrix(0,nrow=N,S)
+    for (i in 1:N) {
+      for (j in 1:S) {
+        thdim[i,j] <- theta[i,dimension[j]] #d=dimension associated with each statement i
+      }
+    }
     iteminfo <- matrix(NA, N, S/2)
-      for (i in 1:N) {
-        for (j in 1:S) {
-          thdim[i,j] <- theta[i,dimension[j]] #d=dimension associated with each statement i
+    for (j in 1:N){
+      for (i in 1:(S/2)){
+        if (dimension[(2*i-1)]!=dimension[2*i]){
+          iteminfo[j, i] <- pair.info2(alpha[(2*i-1)], delta[(2*i-1)], tau[(2*i-1)], thdim[j, (2*i-1)],
+                                       alpha[2*i], delta[2*i], tau[2*i], thdim[j, 2*i])
+        }
+        if (dimension[(2*i-1)]==dimension[2*i]){
+          iteminfo[j, i] <- pair.info1(alpha[(2*i-1)], delta[(2*i-1)], tau[(2*i-1)], thdim[j, (2*i-1)],
+                                       alpha[2*i], delta[2*i], tau[2*i])
         }
       }
-      for (j in 1:N){
-        for (i in 1:(S/2)){
-          if (dimension[(2*i-1)]!=dimension[2*i]){
-            iteminfo[j, i] <- pair.info2(alpha[(2*i-1)], delta[(2*i-1)], tau[(2*i-1)], thdim[j, (2*i-1)],
-                                        alpha[2*i], delta[2*i], tau[2*i], thdim[j, 2*i])
-          }
-          if (dimension[(2*i-1)]==dimension[2*i]){
-            iteminfo[j, i] <- pair.info1(alpha[(2*i-1)], delta[(2*i-1)], tau[(2*i-1)], thdim[j, (2*i-1)],
-                                        alpha[2*i], delta[2*i], tau[2*i])
-          }
-        }
-      }
-      iteminfoavrg <- colMeans(iteminfo)
-      if (information=="item"){
+    }
+  }
+
+  iteminfoavrg <- colMeans(iteminfo)
+  if (information=="item"){
         if (is.null(items)){
           iteminfo <- iteminfoavrg
         }
@@ -158,7 +180,7 @@ information.fcirt <- function(x, approach="direct", information="item", items=NU
         }
         ret <- iteminfo
       }
-      if (information=="test"){
+  if (information=="test"){
         testinfo <- sum(iteminfoavrg)
         ret <- testinfo
       }
