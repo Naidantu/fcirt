@@ -114,8 +114,7 @@ information.fcirt <- function(x, approach="direct", theta="quadrature", informat
     delta <- delta[,1]
     tau <- extract(x, 'tau')
     tau <- tau[,1]
-  }
-  if (approach=="two step"){
+  } else if (approach=="two step"){
     ParInits <- extract(x, 'ParInits')
     alpha <- ParInits[,1]
     S <- length(alpha)
@@ -142,8 +141,7 @@ information.fcirt <- function(x, approach="direct", theta="quadrature", informat
         }
       }
     }
-  }
-  if (theta=="estimated"){
+  } else if (theta=="estimated"){
     theta <- extract(x, 'theta')
     theta <- theta[,1]
     theta <- matrix(theta, nrow=max(dimension))
@@ -179,8 +177,7 @@ information.fcirt <- function(x, approach="direct", theta="quadrature", informat
           iteminfo <- iteminfoavrg[items]
         }
         ret <- iteminfo
-      }
-  if (information=="test"){
+      } else if (information=="test"){
         testinfo <- sum(iteminfoavrg)
         ret <- testinfo
       }
