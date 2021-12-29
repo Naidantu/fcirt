@@ -126,7 +126,11 @@ information.fcirt <- function(x, approach="direct", theta="quadrature", informat
   pairmap <- extract(x, 'pairmap')
 
   if (theta=="quadrature"){
-    theta <- matrix(rep(seq(-3,3,6/60),2), nrow = 61, ncol = 2)
+
+    theta <- t(t(seq(-3,3,.1)))
+    thetas <- t(t(theta[rep(1:nrow(theta),each=nrow(theta)),]))
+    thetat <- theta[rep(1:nrow(theta),nrow(theta)),]
+    theta <- cbind(thetas, thetat)
     N <- nrow(theta)
     iteminfo <- matrix(NA, N, S/2)
     for (j in 1:N){
