@@ -4,14 +4,13 @@
 # fcirt
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 The goal of fcirt is to estimate forced choice models using Bayesian
 method. Specifically, the Multi-Unidimensional Pairwise Preference
 (MUPP) model is estimated using the R package **rstan** that utilizes
 the Hamiltonian Monte Carlo sampling algorithm. Four functions (i.e.,
-fcirt( ), extract( ), information( ), and bayesplot( ) are provided for
+fcirt( ), extract( ), information( ), and bayesplot( )) are provided for
 model estimation, results extraction, item and test information
 computation, and Bayesian diagnostic plottings, respectively.
 
@@ -89,25 +88,25 @@ theta <- matrix(theta, nrow=2)
 theta <- t(theta)
 # theta estimates in p*trait matrix format
 theta
-#>               [,1]         [,2]
-#>  [1,]  0.007382341  0.002326966
-#>  [2,]  0.061271981 -0.048335725
-#>  [3,]  0.097662487 -0.080921828
-#>  [4,] -0.023325852  0.055251515
-#>  [5,] -0.001283002  0.038255501
-#>  [6,]  0.035181477  0.001793981
-#>  [7,] -0.028189537  0.054358059
-#>  [8,] -0.021047059  0.025715171
-#>  [9,]  0.013563438  0.051974681
-#> [10,] -0.025784360  0.016004057
+#>               [,1]        [,2]
+#>  [1,] -0.023326651 -0.03055898
+#>  [2,]  0.023196544  0.02679090
+#>  [3,] -0.014954009  0.03139395
+#>  [4,] -0.017056012 -0.01386742
+#>  [5,] -0.008155243 -0.03766694
+#>  [6,]  0.058712369 -0.01697841
+#>  [7,] -0.022276577  0.00689250
+#>  [8,]  0.036137392  0.03138213
+#>  [9,]  0.006967824 -0.01321674
+#> [10,] -0.023923473  0.01056224
 # 3.2 Extract the tau estimates
 tau <- extract(x=mod, pars='tau')
 tau <- tau[,1]
 tau
 #>     tau[1]     tau[2]     tau[3]     tau[4]     tau[5]     tau[6]     tau[7] 
-#> -2.1121422 -0.9893592 -1.2315215 -1.5005845 -1.7751966 -1.0619002 -1.7532432 
+#> -2.0767845 -0.9670536 -1.2123404 -1.5029586 -1.7202191 -1.0379493 -1.7797779 
 #>     tau[8] 
-#> -1.0258186
+#> -1.0244982
 
 ## Step 4: Plottings
 # 4.1 Obtain the density plots for alpha
@@ -124,14 +123,13 @@ bayesplot(x=mod, pars='alpha', plot='trace', inc_warmup=FALSE)
 <img src="man/figures/README-example-2.png" width="70%" />
 
 ``` r
-
 ## Step 5: Item information 
 # 5.1 Obtain item information for item 1-3
 OII <- information(x=mod, approach="direct", information="item", items=1:3)
 OII
-#> [1] 0.019214182 0.007737596 0.007722483
+#> [1] 0.3935772 0.4049316 0.4042282
 # 5.2 Obtain test information 
 OTI <- information(x=mod, approach="direct", information="test")
 OTI
-#> [1] 0.03921591
+#> [1] 1.608332
 ```

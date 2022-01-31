@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Four functions (i.e., fcirt( ), extract( ), information( ), and bayesplot( ) are provided for model estimation, results extraction, item and test information computation, and Bayesian diagnostic plottings, respectively.
+The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Four functions (i.e., fcirt( ), extract( ), information( ), and bayesplot( )) are provided for model estimation, results extraction, item and test information computation, and Bayesian diagnostic plottings, respectively.
 
 ## Installation
 
