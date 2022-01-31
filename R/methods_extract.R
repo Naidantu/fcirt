@@ -11,7 +11,7 @@
 #' ind <- c(1,2,3,4)
 #' ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=5,chains=1)
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=4,chains=1)
 #' alpha <- extract(mod, 'alpha')
 #' @export
 extract <- function(x, pars){

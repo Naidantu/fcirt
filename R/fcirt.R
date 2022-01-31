@@ -28,7 +28,7 @@
 #' ind <- c(1,2,3,4)
 #' ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=5,chains=1)
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=4,chains=1)
 #' @export
 fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NULL, iter=3000, chains=3,
                    warmup=floor(iter/2), adapt_delta=0.90, max_treedepth=15, thin=1, cores=2,

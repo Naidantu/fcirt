@@ -33,7 +33,7 @@ The fcirt package was developed to estimate forced choice models using Bayesian 
 
 ### Step 1: Input data
 
-A randomly generated dataset is used as an example in this tutorial. The first input (**fcirt.Data**) is a dataset including responses from 10 respondents answering a 4 forced choice items (pairs) measuring 2 traits. Note that data is stored in a wide format.
+A randomly generated dataset is used as an example in this tutorial. The first input (**fcirt.Data**) is a dataset including responses from 5 respondents answering a 4 forced choice items (pairs) measuring 2 traits. Note that data is stored in a wide format.
 
 ```{r, echo=FALSE}
 # Response data
@@ -48,11 +48,6 @@ ID        | item 1    | item 2    | item 3    | item 4
 3         | 0         | 1         | 1         | 1
 4         | 1         | 0         | 1         | 1
 5         | 1         | 1         | 1         | 0
-6         | 1         | 1         | 0         | 1
-7         | 1         | 0         | 1         | 1
-8         | 1         | 0         | 1         | 0
-9         | 1         | 0         | 1         | 1
-10        | 1         | 0         | 1         | 1
 
 The second input (**pairmap**) is a two-column matrix: the first column is the statement number for statement s; the second column is the statement number for statement t.
 
@@ -103,7 +98,7 @@ Statement | Alpha     | Delta     | Tau
 
 ```{r, warning = FALSE}
 # Fit the MUPP model
-#>mod <- fcirt(fcirt.Data=fcirt.Data, pairmap=pairmap, ind=ind, ParInits=ParInits, iter=1000)
+#>mod <- fcirt(fcirt.Data=fcirt.Data, pairmap=pairmap, ind=ind, ParInits=ParInits, iter=100)
 #>mod
 ```
 
