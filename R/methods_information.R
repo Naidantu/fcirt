@@ -7,14 +7,14 @@
 #' @param items The items of which information to be calculated. The default is all the items.
 #' @return Selected item information or overall test information
 #' @examples
-#' Data <- c(1,1,0,1)
-#' Data <- matrix(Data,nrow = 2)
-#' pairmap <- c(1,3,2,4)
-#' pairmap <- matrix(pairmap,nrow = 2)
-#' ind <- c(1,2,3,4)
-#' ParInits <- c(1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1)
+#' Data <- c(1)
+#' Data <- matrix(Data,nrow = 1)
+#' pairmap <- c(1,2)
+#' pairmap <- matrix(pairmap,nrow = 1)
+#' ind <- c(1,2)
+#' ParInits <- c(1, 1, 1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=4,chains=1)
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
 #' information(mod, approach="direct", theta="quadrature", information="item", items=1)
 #' @export
 information <- function(x, approach, theta, information, items){
