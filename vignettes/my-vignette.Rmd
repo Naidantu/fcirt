@@ -2,14 +2,14 @@
 title: "fcirt: Forced Choice in Item Response Theory"
 author: Naidan Tu
 output: 
-  rmarkdown::html_vignette:
-    toc: TRUE
   pdf_document:
     toc: TRUE
+  rmarkdown::html_vignette:
+    toc: TRUE
 vignette: >
+  %\VignetteEncoding{UTF-8}
   %\VignetteIndexEntry{fcirt: Forced Choice in Item Response Theory}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

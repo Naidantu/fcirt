@@ -17,11 +17,19 @@ knitr::opts_chunk$set(
 # fcirt
 
 <!-- badges: start -->
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/fcirt)](https://cran.r-project.org/package=fcirt)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcirt)](https://cranlogs.r-pkg.org/badges/grand-total/fcirt "Total downloads")
 <!-- badges: end -->
 
 The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Four functions (i.e., fcirt( ), extract( ), information( ), and bayesplot( )) are provided for model estimation, results extraction, item and test information computation, and Bayesian diagnostic plottings, respectively.
 
 ## Installation
+
+You can install fcirt from CRAN:
+
+``` r
+install.packages("fcirt")
+```
 
 You can install the development version of fcirt from GitHub:
 

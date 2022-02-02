@@ -4,6 +4,10 @@
 # fcirt
 
 <!-- badges: start -->
+
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/fcirt)](https://cran.r-project.org/package=fcirt)
+[![Total
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcirt)](https://cranlogs.r-pkg.org/badges/grand-total/fcirt "Total downloads")
 <!-- badges: end -->
 
 The goal of fcirt is to estimate forced choice models using Bayesian
@@ -15,6 +19,12 @@ model estimation, results extraction, item and test information
 computation, and Bayesian diagnostic plottings, respectively.
 
 ## Installation
+
+You can install fcirt from CRAN:
+
+``` r
+install.packages("fcirt")
+```
 
 You can install the development version of fcirt from GitHub:
 
@@ -89,24 +99,24 @@ theta <- t(theta)
 # theta estimates in p*trait matrix format
 theta
 #>               [,1]        [,2]
-#>  [1,] -0.023326651 -0.03055898
-#>  [2,]  0.023196544  0.02679090
-#>  [3,] -0.014954009  0.03139395
-#>  [4,] -0.017056012 -0.01386742
-#>  [5,] -0.008155243 -0.03766694
-#>  [6,]  0.058712369 -0.01697841
-#>  [7,] -0.022276577  0.00689250
-#>  [8,]  0.036137392  0.03138213
-#>  [9,]  0.006967824 -0.01321674
-#> [10,] -0.023923473  0.01056224
+#>  [1,] -0.056510065  0.05821038
+#>  [2,]  0.051024528  0.03141075
+#>  [3,]  0.003037158 -0.06501504
+#>  [4,] -0.001558201 -0.01900754
+#>  [5,]  0.017972534  0.02165795
+#>  [6,]  0.053098798  0.01949025
+#>  [7,] -0.021488190 -0.01523946
+#>  [8,] -0.019211486 -0.03143620
+#>  [9,]  0.026494056 -0.06910731
+#> [10,] -0.051871191 -0.03644644
 # 3.2 Extract the tau estimates
 tau <- extract(x=mod, pars='tau')
 tau <- tau[,1]
 tau
 #>     tau[1]     tau[2]     tau[3]     tau[4]     tau[5]     tau[6]     tau[7] 
-#> -2.0767845 -0.9670536 -1.2123404 -1.5029586 -1.7202191 -1.0379493 -1.7797779 
+#> -2.1211134 -0.9787187 -1.2174130 -1.5107926 -1.7925023 -1.0748551 -1.8382772 
 #>     tau[8] 
-#> -1.0244982
+#> -1.0526952
 
 ## Step 4: Plottings
 # 4.1 Obtain the density plots for alpha
@@ -127,9 +137,9 @@ bayesplot(x=mod, pars='alpha', plot='trace', inc_warmup=FALSE)
 # 5.1 Obtain item information for item 1-3
 OII <- information(x=mod, approach="direct", information="item", items=1:3)
 OII
-#> [1] 0.3935772 0.4049316 0.4042282
+#> [1] 0.3990541 0.4145044 0.3924897
 # 5.2 Obtain test information 
 OTI <- information(x=mod, approach="direct", information="test")
 OTI
-#> [1] 1.608332
+#> [1] 1.608099
 ```
