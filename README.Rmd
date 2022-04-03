@@ -21,7 +21,12 @@ knitr::opts_chunk$set(
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcirt)](https://cranlogs.r-pkg.org/badges/grand-total/fcirt "Total downloads")
 <!-- badges: end -->
 
-The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Four functions (i.e., fcirt( ), extract( ), information( ), and bayesplot( )) are provided for model estimation, results extraction, item and test information computation, and Bayesian diagnostic plottings, respectively.
+The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Below are some important features of the bmggum package:
+
+1. Item and test information calculated using either quadrature points or estimated person parameters can be obtained using the function information( ). 
+2. Missing data are automatically dealt with in a way similar to how full information maximum likelihood handles missing data.
+3. Dimensions are allowed to correlate and the correlations are estimated.
+4. Four functions (i.e., fcirt( ), extract( ), information( ), and bayesplot( )) are provided for model estimation, results extraction, item and test information computation, and Bayesian diagnostic plottings, respectively. 
 
 ## Installation
 
@@ -42,30 +47,26 @@ devtools::install_github("Naidantu/fcirt")
 This is a basic example which shows you how to prepare data, fit the model, extract and plot results:
 
 ```{r example}
+
 library(fcirt)
 
 ## basic example code
 ## Step 1: Input data
-# 1.1 Response data in wide format
-fcirt.Data <- c(1,0,0,1,1,1,1,1,1,1,0,1,1,0,1,1,0,0,0,0,0,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,1,0,1,1)
+# 1.1 Response data in wide format. If the first statement is preferred, it is coded as 1, otherwise it is coded as 2.
+fcirt.Data <- c(1,2,2,1,1,1,1,1,NA,1,2,1,1,2,1,1,2,2,NA,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
 fcirt.Data <- matrix(fcirt.Data,nrow = 10)
 fcirt.Data
 
-# 1.2 A two-column data matrix: the first column is the statement number for statement s; the second column is the statement number for statement t.
-pairmap <- c(1,3,5,7,2,4,6,8)
-pairmap <- matrix(pairmap,ncol = 2)
-pairmap
-
-# 1.3 A column vector mapping each statement to each trait.
+# 1.2 A column vector mapping each statement to each trait.
 ind <- c(1,2,1,2,1,2,2,1)
 
-# 1.4 A three-column matrix containing initial values for the three statement parameters (alpha, delta, tau) respectively. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package **bmggum** (Tu et al., 2021) can be used to estimate statement parameters for the two-step approach. 
+# 1.3 A three-column matrix containing initial values for the three statement parameters (alpha, delta, tau) respectively. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package **bmggum** (Tu et al., 2021) can be used to estimate statement parameters for the two-step approach. 
 ParInits <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1)
 ParInits <- matrix(ParInits, ncol = 3)
 ParInits
 
 ## Step 2: Fit the MUPP model
-mod <- fcirt(fcirt.Data=fcirt.Data, pairmap=pairmap, ind=ind, ParInits=ParInits, iter=1000)
+mod <- fcirt(fcirt.Data=fcirt.Data, ind=ind, ParInits=ParInits, iter=1000)
 
 ## Step 3: Extract the estimated results 
 # 3.1 Extract the theta estimates 
@@ -81,6 +82,8 @@ theta
 tau <- extract(x=mod, pars='tau')
 tau <- tau[,1]
 tau
+#3.3 Extract the estimates of the correlations among dimensions
+cor <- extract(x=mod, pars='cor')
 
 ## Step 4: Plottings
 # 4.1 Obtain the density plots for alpha
