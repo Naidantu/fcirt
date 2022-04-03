@@ -52,7 +52,7 @@ library(fcirt)
 
 ## basic example code
 ## Step 1: Input data
-# 1.1 Response data in wide format. If the first statement is preferred, it is coded as 1, otherwise it is coded as 2.
+# 1.1 Response data in wide format. If the first statement is preferred, the data should be coded as 1, otherwise it should be coded as 2. 
 fcirt.Data <- c(1,2,2,1,1,1,1,1,NA,1,2,1,1,2,1,1,2,2,NA,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
 fcirt.Data <- matrix(fcirt.Data,nrow = 10)
 fcirt.Data

@@ -13,10 +13,20 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcirt)](https://cranlog
 The goal of fcirt is to estimate forced choice models using Bayesian
 method. Specifically, the Multi-Unidimensional Pairwise Preference
 (MUPP) model is estimated using the R package **rstan** that utilizes
-the Hamiltonian Monte Carlo sampling algorithm. Four functions (i.e.,
-fcirt( ), extract( ), information( ), and bayesplot( )) are provided for
-model estimation, results extraction, item and test information
-computation, and Bayesian diagnostic plottings, respectively.
+the Hamiltonian Monte Carlo sampling algorithm. Below are some important
+features of the bmggum package:
+
+1.  Item and test information calculated using either quadrature points
+    or estimated person parameters can be obtained using the function
+    information( ).
+2.  Missing data are automatically dealt with in a way similar to how
+    full information maximum likelihood handles missing data.
+3.  Dimensions are allowed to correlate and the correlations are
+    estimated.
+4.  Four functions (i.e., fcirt( ), extract( ), information( ), and
+    bayesplot( )) are provided for model estimation, results extraction,
+    item and test information computation, and Bayesian diagnostic
+    plottings, respectively.
 
 ## Installation
 
@@ -42,36 +52,26 @@ library(fcirt)
 
 ## basic example code
 ## Step 1: Input data
-# 1.1 Response data in wide format
-fcirt.Data <- c(1,0,0,1,1,1,1,1,1,1,0,1,1,0,1,1,0,0,0,0,0,0,1,1,1,0,1,1,1,1,0,1,1,1,0,1,1,0,1,1)
+# 1.1 Response data in wide format. If the first statement is preferred, the data should be coded as 1, otherwise it should be coded as 2. 
+fcirt.Data <- c(1,2,2,1,1,1,1,1,NA,1,2,1,1,2,1,1,2,2,NA,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
 fcirt.Data <- matrix(fcirt.Data,nrow = 10)
 fcirt.Data
 #>       [,1] [,2] [,3] [,4]
-#>  [1,]    1    0    0    0
-#>  [2,]    0    1    0    1
-#>  [3,]    0    1    1    1
-#>  [4,]    1    0    1    1
-#>  [5,]    1    1    1    0
-#>  [6,]    1    1    0    1
-#>  [7,]    1    0    1    1
-#>  [8,]    1    0    1    0
-#>  [9,]    1    0    1    1
-#> [10,]    1    0    1    1
+#>  [1,]    1    2    2    2
+#>  [2,]    2    1    2    1
+#>  [3,]    2    1    1    1
+#>  [4,]    1    2    1    1
+#>  [5,]    1    1    1    2
+#>  [6,]    1    1    2    1
+#>  [7,]    1    2    1    1
+#>  [8,]    1    2    1    2
+#>  [9,]   NA   NA    1    1
+#> [10,]    1    2    1    1
 
-# 1.2 A two-column data matrix: the first column is the statement number for statement s; the second column is the statement number for statement t.
-pairmap <- c(1,3,5,7,2,4,6,8)
-pairmap <- matrix(pairmap,ncol = 2)
-pairmap
-#>      [,1] [,2]
-#> [1,]    1    2
-#> [2,]    3    4
-#> [3,]    5    6
-#> [4,]    7    8
-
-# 1.3 A column vector mapping each statement to each trait.
+# 1.2 A column vector mapping each statement to each trait.
 ind <- c(1,2,1,2,1,2,2,1)
 
-# 1.4 A three-column matrix containing initial values for the three statement parameters (alpha, delta, tau) respectively. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package **bmggum** (Tu et al., 2021) can be used to estimate statement parameters for the two-step approach. 
+# 1.3 A three-column matrix containing initial values for the three statement parameters (alpha, delta, tau) respectively. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package **bmggum** (Tu et al., 2021) can be used to estimate statement parameters for the two-step approach. 
 ParInits <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1)
 ParInits <- matrix(ParInits, ncol = 3)
 ParInits
@@ -86,7 +86,7 @@ ParInits
 #> [8,]    1    1   -1
 
 ## Step 2: Fit the MUPP model
-mod <- fcirt(fcirt.Data=fcirt.Data, pairmap=pairmap, ind=ind, ParInits=ParInits, iter=1000)
+mod <- fcirt(fcirt.Data=fcirt.Data, ind=ind, ParInits=ParInits, iter=1000)
 
 ## Step 3: Extract the estimated results 
 # 3.1 Extract the theta estimates 
@@ -98,25 +98,25 @@ theta <- matrix(theta, nrow=2)
 theta <- t(theta)
 # theta estimates in p*trait matrix format
 theta
-#>               [,1]        [,2]
-#>  [1,] -0.056510065  0.05821038
-#>  [2,]  0.051024528  0.03141075
-#>  [3,]  0.003037158 -0.06501504
-#>  [4,] -0.001558201 -0.01900754
-#>  [5,]  0.017972534  0.02165795
-#>  [6,]  0.053098798  0.01949025
-#>  [7,] -0.021488190 -0.01523946
-#>  [8,] -0.019211486 -0.03143620
-#>  [9,]  0.026494056 -0.06910731
-#> [10,] -0.051871191 -0.03644644
+#>               [,1]         [,2]
+#>  [1,]  0.031983911 -0.040507535
+#>  [2,]  0.031117462  0.007010284
+#>  [3,] -0.059953205  0.030518524
+#>  [4,] -0.051325147  0.040002677
+#>  [5,]  0.015184621  0.026122820
+#>  [6,]  0.023052726 -0.021688658
+#>  [7,] -0.051152959 -0.001259698
+#>  [8,] -0.004859978  0.057635574
+#>  [9,]  0.009258872  0.033419928
+#> [10,] -0.035629044  0.034475004
 # 3.2 Extract the tau estimates
 tau <- extract(x=mod, pars='tau')
 tau <- tau[,1]
 tau
-#>     tau[1]     tau[2]     tau[3]     tau[4]     tau[5]     tau[6]     tau[7] 
-#> -2.1211134 -0.9787187 -1.2174130 -1.5107926 -1.7925023 -1.0748551 -1.8382772 
-#>     tau[8] 
-#> -1.0526952
+#>    tau[1]    tau[2]    tau[3]    tau[4]    tau[5]    tau[6]    tau[7]    tau[8] 
+#> -1.987001 -1.003432 -1.241766 -1.399681 -1.778702 -1.036536 -1.804697 -1.077218
+#3.3 Extract the estimates of the correlations among dimensions
+cor <- extract(x=mod, pars='cor')
 
 ## Step 4: Plottings
 # 4.1 Obtain the density plots for alpha
@@ -137,9 +137,9 @@ bayesplot(x=mod, pars='alpha', plot='trace', inc_warmup=FALSE)
 # 5.1 Obtain item information for item 1-3
 OII <- information(x=mod, approach="direct", information="item", items=1:3)
 OII
-#> [1] 0.3990541 0.4145044 0.3924897
+#> [1] 0.4092903 0.4042939 0.3877951
 # 5.2 Obtain test information 
 OTI <- information(x=mod, approach="direct", information="test")
 OTI
-#> [1] 1.608099
+#> [1] 1.608404
 ```

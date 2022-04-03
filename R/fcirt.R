@@ -1,6 +1,6 @@
 #' @title forced choice model estimation
 #' @description This function implements full Bayesian estimation of forced choice models using rstan
-#' @param fcirt.Data Response data in wide format. If the first statement is preferred, it is coded as 1, otherwise it is coded as 2.
+#' @param fcirt.Data Response data in wide format. If the first statement is preferred, the data should be coded as 1, otherwise it should be coded as 2.
 #' @param ind A column vector mapping each statement to each trait. For example, c(1, 1, 1, 2, 2, 2) means that the first 3 statements belong to trait 1 and the last 3 statements belong to trait 2.
 #' @param ParInits A three-column matrix containing initial values for the three statement parameters. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package bmggum can be used to estimate statement parameters for the two-step approach. See documentation for bmggum for more details.
 #' @param model Models fitted. They can be "MUPP". The default is MUPP (Multi-Unidimensional Pairwise Preference) model.
