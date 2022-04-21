@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/fcirt)](https://cranlogs.r-pkg.org/badges/grand-total/fcirt "Total downloads")
 <!-- badges: end -->
 
-The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Below are some important features of the bmggum package:
+The goal of fcirt is to estimate forced choice models using Bayesian method. Specifically, the Multi-Unidimensional Pairwise Preference (MUPP) model is estimated using the R package **rstan** that utilizes the Hamiltonian Monte Carlo sampling algorithm. Below are some important features of the fcirt package:
 
 1. Item and test information calculated using either quadrature points or estimated person parameters can be obtained using the function information( ). 
 2. Missing data are automatically dealt with in a way similar to how full information maximum likelihood handles missing data.

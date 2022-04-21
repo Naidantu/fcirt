@@ -27,7 +27,7 @@ fcirt(
 )
 }
 \arguments{
-\item{fcirt.Data}{Response data in wide format}
+\item{fcirt.Data}{Response data in wide format. If the first statement is preferred, the data should be coded as 1, otherwise it should be coded as 2.}
 
 \item{pairmap}{A two-column data matrix: the first column is the statement number for statement s; the second column is the statement number for statement t.}
 

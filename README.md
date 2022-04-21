@@ -14,7 +14,7 @@ The goal of fcirt is to estimate forced choice models using Bayesian
 method. Specifically, the Multi-Unidimensional Pairwise Preference
 (MUPP) model is estimated using the R package **rstan** that utilizes
 the Hamiltonian Monte Carlo sampling algorithm. Below are some important
-features of the bmggum package:
+features of the fcirt package:
 
 1.  Item and test information calculated using either quadrature points
     or estimated person parameters can be obtained using the function
@@ -112,24 +112,24 @@ theta <- t(theta)
 # theta estimates in p*trait matrix format
 theta
 #>               [,1]         [,2]
-#>  [1,] -0.074983964  0.024690717
-#>  [2,]  0.022404742 -0.007263735
-#>  [3,]  0.023674552  0.016694761
-#>  [4,]  0.008164025 -0.036715749
-#>  [5,] -0.012991039 -0.052694390
-#>  [6,] -0.025219165 -0.029850317
-#>  [7,]  0.035445771 -0.019566042
-#>  [8,] -0.045212003  0.035435886
-#>  [9,]  0.028803043  0.011681336
-#> [10,] -0.012875164 -0.029724370
+#>  [1,]  0.043593974  0.020942930
+#>  [2,] -0.052605765  0.009710104
+#>  [3,] -0.038628102 -0.055032694
+#>  [4,]  0.008104540  0.009413828
+#>  [5,]  0.022102307 -0.028199511
+#>  [6,] -0.061551491  0.017464072
+#>  [7,] -0.001696831  0.011903261
+#>  [8,]  0.050489759  0.023875857
+#>  [9,] -0.041877383 -0.020983075
+#> [10,] -0.009868542 -0.005598337
 # 3.2 Extract the tau estimates
 tau <- extract(x=mod, pars='tau')
 tau <- tau[,1]
 tau
 #>     tau[1]     tau[2]     tau[3]     tau[4]     tau[5]     tau[6]     tau[7] 
-#> -2.0252600 -0.9630989 -1.2552869 -1.3946850 -1.8149567 -1.1159833 -1.8051137 
+#> -1.9862509 -0.9833654 -1.2623234 -1.4136347 -1.7795922 -1.0998764 -1.8196311 
 #>     tau[8] 
-#> -1.0604982
+#> -1.0626520
 #3.3 Extract the estimates of the correlations among dimensions
 cor <- extract(x=mod, pars='cor')
 
@@ -152,9 +152,9 @@ bayesplot(x=mod, pars='alpha', plot='trace', inc_warmup=FALSE)
 # 5.1 Obtain item information for item 1-3
 OII <- information(x=mod, approach="direct", information="item", items=1:3)
 OII
-#> [1] 0.3927859 0.4133877 0.3924874
+#> [1] 0.4086430 0.3964934 0.4016166
 # 5.2 Obtain test information 
 OTI <- information(x=mod, approach="direct", information="test")
 OTI
-#> [1] 1.589694
+#> [1] 1.623691
 ```
