@@ -8,10 +8,12 @@
 #' @examples
 #' Data <- c(1)
 #' Data <- matrix(Data,nrow = 1)
+#' pairmap <- c(1,2)
+#' pairmap <- matrix(pairmap,nrow = 1)
 #' ind <- c(1,2)
 #' ParInits <- c(1, 1, 1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
 #' bayesplot(mod, 'alpha', 'density', inc_warmup=FALSE)
 #' @export
 bayesplot <- function(x, pars, plot, inc_warmup=FALSE){

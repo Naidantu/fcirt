@@ -54,6 +54,7 @@ data {
   int<lower=1> n_pair;
   int<lower=1> N;
   int<lower=1> n_dimension;
+  int<lower=0> p[n_pair, 2]; //p=pair specification map for the given pairs
   int<lower=1, upper=2> y[N];
   int<lower=1> I1;
   int<lower=1> J1;
@@ -96,7 +97,7 @@ model {
 
   for (n in 1:N){
 
-    target += MUPP(y[n],theta[JJ[n],ind[2*n-1]],theta[JJ[n],ind[2*n]],alpha[2*II[n]-1],alpha[2*II[n]],delta[2*II[n]-1],delta[2*II[n]],tau[2*II[n]-1],tau[2*II[n]]);
+    target += MUPP(y[n],theta[JJ[n],ind[2*n-1]],theta[JJ[n],ind[2*n]],alpha[p[II[n],1]],alpha[p[II[n],2]],delta[p[II[n],1]],delta[p[II[n],2]],tau[p[II[n],1]],tau[p[II[n],2]]);
 
   }
 }
@@ -108,6 +109,7 @@ generated quantities{
   Cor=multiply_lower_tri_self_transpose(L_Omega);
 
   for (n in 1:N) {
-    log_lik[n] = MUPP(y[n],theta[JJ[n],ind[2*n-1]],theta[JJ[n],ind[2*n]],alpha[2*II[n]-1],alpha[2*II[n]],delta[2*II[n]-1],delta[2*II[n]],tau[2*II[n]-1],tau[2*II[n]]);
+    log_lik[n] = MUPP(y[n],theta[JJ[n],ind[2*n-1]],theta[JJ[n],ind[2*n]],alpha[p[II[n],1]],alpha[p[II[n],2]],delta[p[II[n],1]],delta[p[II[n],2]],tau[p[II[n],1]],tau[p[II[n],2]]);
+
   }
 }

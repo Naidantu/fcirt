@@ -1,15 +1,17 @@
 #' @title results extraction
 #' @description This function extracts estimation results.
 #' @param x returned object
-#' @param pars Names of extracted parameters. They can be "theta" (person trait estimates), "alpha" (statement discrimination parameters), "delta" (statement location parameters), "tau" (statement threshold parameters), data" (fcirt.Data), "fit" (the stanfit object), "dimension" (the input column vector mapping each statement to each trait), and "ParInits" (A three-column matrix containing initial values for the three statement parameters. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package bmggum can be used to estimate statement parameters for the two-step approach).
+#' @param pars Names of extracted parameters. They can be "theta" (person trait estimates), "alpha" (statement discrimination parameters), "delta" (statement location parameters), "tau" (statement threshold parameters), data" (fcirt.Data), "fit" (the stanfit object), "dimension" (the input column vector mapping each statement to each trait), "pairmap" (A two-column data matrix: the first column is the statement number for statement s; the second column is the statement number for statement t), and "ParInits" (A three-column matrix containing initial values for the three statement parameters. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package bmggum can be used to estimate statement parameters for the two-step approach).
 #' @return Selected results output
 #' @examples
 #' Data <- c(1)
 #' Data <- matrix(Data,nrow = 1)
+#' pairmap <- c(1,2)
+#' pairmap <- matrix(pairmap,nrow = 1)
 #' ind <- c(1,2)
 #' ParInits <- c(1, 1, 1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
 #' alpha <- extract(mod, 'alpha')
 #' @export
 extract <- function(x, pars){
@@ -31,6 +33,7 @@ extract.fcirt <- function(x, pars){
                 data=x[["Data"]],
                 fit=x[["Fit"]],
                 dimension=x[["Dimension"]],
+                pairmap=x[["Pairmap"]],
                 ParInits=x[["ParInits"]])
 
   ret

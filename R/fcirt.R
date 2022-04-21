@@ -1,6 +1,7 @@
 #' @title forced choice model estimation
 #' @description This function implements full Bayesian estimation of forced choice models using rstan
 #' @param fcirt.Data Response data in wide format. If the first statement is preferred, the data should be coded as 1, otherwise it should be coded as 2.
+#' @param pairmap A two-column data matrix: the first column is the statement number for statement s; the second column is the statement number for statement t.
 #' @param ind A column vector mapping each statement to each trait. For example, c(1, 1, 1, 2, 2, 2) means that the first 3 statements belong to trait 1 and the last 3 statements belong to trait 2.
 #' @param ParInits A three-column matrix containing initial values for the three statement parameters. If using the direct MUPP estimation approach, 1 and -1 for alphas and taus are recommended and -1 or 1 for deltas are recommended depending on the signs of the statements. If using the two-step estimation approach, pre-estimated statement parameters are used as the initial values. The R package bmggum can be used to estimate statement parameters for the two-step approach. See documentation for bmggum for more details.
 #' @param model Models fitted. They can be "MUPP". The default is MUPP (Multi-Unidimensional Pairwise Preference) model.
@@ -22,12 +23,14 @@
 #' @examples
 #' Data <- c(1)
 #' Data <- matrix(Data,nrow = 1)
+#' pairmap <- c(1,2)
+#' pairmap <- matrix(pairmap,nrow = 1)
 #' ind <- c(1,2)
 #' ParInits <- c(1, 1, 1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
 #' @export
-fcirt <- function(fcirt.Data, ind, ParInits, model="MUPP", covariate=NULL, iter=3000, chains=3,
+fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NULL, iter=3000, chains=3,
                    warmup=floor(iter/2), adapt_delta=0.90, max_treedepth=15, thin=1, cores=2,
                    ma=0, va=0.5, md=0, vd=1, mt=0, vt=2){
 
@@ -50,7 +53,8 @@ fcirt <- function(fcirt.Data, ind, ParInits, model="MUPP", covariate=NULL, iter=
       I2<-dim(fcirt.Data)[1]
       #number of pairs
       J2<-dim(fcirt.Data)[2]
-      S <- J2*2
+      #S <- J2*2
+      S <- max(pairmap)
       D <- max(ind)
 
       #initial values
@@ -58,7 +62,7 @@ fcirt <- function(fcirt.Data, ind, ParInits, model="MUPP", covariate=NULL, iter=
         list(alpha=ParInits[,1], delta=ParInits[,2], tau=ParInits[,3], theta=matrix(0,nrow=I2,ncol=D))
       }
 
-      data_list<-list(n_student = I2, n_item=S, n_pair=J2, n_dimension=D, ind=ind,
+      data_list<-list(n_student = I2, n_item=S, n_pair=J2, n_dimension=D, ind=ind, p=pairmap,
                       ma=ma,
                       va=va,
                       md=md,
@@ -100,6 +104,7 @@ fcirt <- function(fcirt.Data, ind, ParInits, model="MUPP", covariate=NULL, iter=
                           Data=fcirt.Data,
                           Fit=fcirt,
                           Dimension=dimension,
+                          Pairmap=pairmap,
                           ParInits=ParInits)
     }
   }
