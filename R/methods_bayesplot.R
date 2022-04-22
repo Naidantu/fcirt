@@ -6,6 +6,7 @@
 #' @param inc_warmup Whether to include warmup iterations or not when plotting. The default is FALSE.
 #' @return Selected plots for selected parameters
 #' @examples
+#' \donttest{
 #' Data <- c(1,2)
 #' Data <- matrix(Data,nrow = 1)
 #' pairmap <- c(1,3,2,4)
@@ -14,7 +15,7 @@
 #' ParInits <- c(1, 1, 1, 1,1,-1, -1,1, -1,-1,-1,-1)
 #' ParInits <- matrix(ParInits, ncol = 3)
 #' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
-#' bayesplot(mod, 'alpha', 'density', inc_warmup=FALSE)
+#' bayesplot(mod, 'alpha', 'density', inc_warmup=FALSE)}
 #' @export
 bayesplot <- function(x, pars, plot, inc_warmup=FALSE){
   UseMethod("bayesplot")

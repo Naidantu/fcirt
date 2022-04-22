@@ -72,12 +72,12 @@ Result object that stores information including the (1) stanfit object, (2) esti
 This function implements full Bayesian estimation of forced choice models using rstan
 }
 \examples{
-Data <- c(1)
+Data <- c(1,2)
 Data <- matrix(Data,nrow = 1)
-pairmap <- c(1,2)
-pairmap <- matrix(pairmap,nrow = 1)
-ind <- c(1,2)
-ParInits <- c(1, 1, 1, -1, -1, -1)
+pairmap <- c(1,3,2,4)
+pairmap <- matrix(pairmap,nrow = 2)
+ind <- c(1,2,1,2)
+ParInits <- c(1, 1, 1, 1,1,-1, -1,1, -1,-1,-1,-1)
 ParInits <- matrix(ParInits, ncol = 3)
 mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
 }
