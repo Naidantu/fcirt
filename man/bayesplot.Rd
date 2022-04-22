@@ -22,6 +22,7 @@ Selected plots for selected parameters
 This function provides plots including density plots, trace plots, and auto-correlation plots to aid model convergence diagnosis.
 }
 \examples{
+\donttest{
 Data <- c(1,2)
 Data <- matrix(Data,nrow = 1)
 pairmap <- c(1,3,2,4)
@@ -30,5 +31,5 @@ ind <- c(1,2,1,2)
 ParInits <- c(1, 1, 1, 1,1,-1, -1,1, -1,-1,-1,-1)
 ParInits <- matrix(ParInits, ncol = 3)
 mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
-bayesplot(mod, 'alpha', 'density', inc_warmup=FALSE)
+bayesplot(mod, 'alpha', 'density', inc_warmup=FALSE)}
 }
