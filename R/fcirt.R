@@ -21,12 +21,12 @@
 #' @param vt Standard deviation of the prior distribution for taus. The default value is 2.
 #' @return Result object that stores information including the (1) stanfit object, (2) estimated item parameters, (3) estimated person parameters, (4) response data, and (5) the input column vector mapping each statement to each trait.
 #' @examples
-#' Data <- c(1)
+#' Data <- c(1,2)
 #' Data <- matrix(Data,nrow = 1)
-#' pairmap <- c(1,2)
-#' pairmap <- matrix(pairmap,nrow = 1)
-#' ind <- c(1,2)
-#' ParInits <- c(1, 1, 1, -1, -1, -1)
+#' pairmap <- c(1,3,2,4)
+#' pairmap <- matrix(pairmap,nrow = 2)
+#' ind <- c(1,2,1,2)
+#' ParInits <- c(1, 1, 1, 1,1,-1, -1,1, -1,-1,-1,-1)
 #' ParInits <- matrix(ParInits, ncol = 3)
 #' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)
 #' @export
@@ -46,7 +46,11 @@ fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NU
       Missing <- matrix(NA,nrow=(ncol(fcirt.Data))*N1,ncol=1)
       MissPattern<-data.frame(Missing=((as.numeric(is.na(t(fcirt.Data)))*-1)+1),ID=seq(1,((ncol(fcirt.Data))*N1),1))
       Miss<-subset(MissPattern,Missing==0)
-      ind<-rep(ind,N1)[-c(Miss$ID*2-1, Miss$ID*2)]
+      if (nrow(Miss)==0){
+        ind<-rep(ind,N1)
+      }else{
+        ind<-rep(ind,N1)[-c(Miss$ID*2-1, Miss$ID*2)]
+      }
 
       Data<-suppressWarnings(edstan::irt_data(response_matrix =fcirt.Data))
       #sample size
