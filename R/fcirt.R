@@ -118,3 +118,8 @@ fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NU
   class(fcirt.summary) <- "fcirt"
   return(fcirt.summary)
 }
+
+#' @importFrom RcppParallel RcppParallelLibs
+#' @import rstantools
+NULL
+
