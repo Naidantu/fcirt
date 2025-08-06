@@ -22,14 +22,15 @@
 #' @return Result object that stores information including the (1) stanfit object, (2) estimated item parameters, (3) estimated person parameters, (4) response data, and (5) the input column vector mapping each statement to each trait.
 #' @examples
 #' \donttest{
-#' Data <- c(1,2)
-#' Data <- matrix(Data,nrow = 1)
-#' pairmap <- c(1,3,2,4)
-#' pairmap <- matrix(pairmap,nrow = 2)
-#' ind <- c(1,2,1,2)
-#' ParInits <- c(1, 1, 1, 1,1,-1, -1,1, -1,-1,-1,-1)
+#' # long running time
+#' Data <- c(1,2,2,1,1,1,1,1,NA,1,2,1,1,2,1,1,2,2,NA,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
+#' Data <- matrix(fcirt.Data,nrow = 10)
+#' pairmap <- c(1,3,5,7,2,4,6,8)
+#' pairmap <- matrix(pairmap,ncol = 2)
+#' ind <- c(1,2,1,2,1,2,2,1)
+#' ParInits <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=3,warmup=1,chains=1)}
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=1000,warmup=500,chains=2)}
 #' @export
 fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NULL, iter=3000, chains=3,
                    warmup=floor(iter/2), adapt_delta=0.90, max_treedepth=15, thin=1, cores=2,
