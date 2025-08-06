@@ -1,3 +1,8 @@
+# fcirt 0.2.1 2025-08-06
+
+##Update my email address
+##Update the examples  
+
 # fcirt 0.2.0 2022-04-21
 
 ##Add code handling missing data

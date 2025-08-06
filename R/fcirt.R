@@ -24,13 +24,14 @@
 #' \donttest{
 #' # long running time
 #' Data <- c(1,2,2,1,1,1,1,1,NA,1,2,1,1,2,1,1,2,2,NA,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
-#' Data <- matrix(fcirt.Data,nrow = 10)
+#' Data <- matrix(Data,nrow = 10)
 #' pairmap <- c(1,3,5,7,2,4,6,8)
 #' pairmap <- matrix(pairmap,ncol = 2)
 #' ind <- c(1,2,1,2,1,2,2,1)
 #' ParInits <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1)
 #' ParInits <- matrix(ParInits, ncol = 3)
-#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,ParInits=ParInits,iter=1000,warmup=500,chains=2)}
+#' mod <- fcirt(fcirt.Data=Data,pairmap=pairmap,ind=ind,
+#' ParInits=ParInits,iter=1000,warmup=500,chains=2)}
 #' @export
 fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NULL, iter=3000, chains=3,
                    warmup=floor(iter/2), adapt_delta=0.90, max_treedepth=15, thin=1, cores=2,
@@ -118,8 +119,4 @@ fcirt <- function(fcirt.Data, pairmap, ind, ParInits, model="MUPP", covariate=NU
   class(fcirt.summary) <- "fcirt"
   return(fcirt.summary)
 }
-
-#' @importFrom RcppParallel RcppParallelLibs
-#' @import rstantools
-NULL
 

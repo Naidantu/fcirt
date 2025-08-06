@@ -10,3 +10,23 @@ Forced Choice in Item Response Theory
 \references{
 Stan Development Team (2020). RStan: the R interface to Stan. R package version 2.21.2. https://mc-stan.org
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/Naidantu/fcirt}
+  \item Report bugs at \url{https://github.com/Naidantu/fcirt/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Naidan Tu \email{naidantu1031@gmail.com} (\href{https://orcid.org/0000-0002-5179-4133}{ORCID})
+
+Authors:
+\itemize{
+  \item Seang-Hwane Joo \email{sjoo@ku.edu} (\href{https://orcid.org/0000-0003-4861-4362}{ORCID})
+  \item Philseok Lee \email{plee27@gmu.edu} (\href{https://orcid.org/0000-0002-6965-0808}{ORCID})
+  \item Stephen Stark \email{sestark@usf.edu}
+}
+
+}
+\keyword{internal}
