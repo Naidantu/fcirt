@@ -1,6 +1,6 @@
 Package: fcirt
 Title: Forced Choice in Item Response Theory 
-Version: 0.3.0
+Version: 0.2.1
 Date: 2022-04-21
 Authors@R: 
     c(person(given = "Naidan",
