@@ -51,12 +51,13 @@ This is a basic example which shows you how to prepare data, fit the
 model, extract and plot results:
 
 ``` r
+
 library(fcirt)
 
 ## basic example code
 ## Step 1: Input data
 # 1.1 Response data in wide format. If the first statement is preferred, the data should be coded as 1, otherwise it should be coded as 2. 
-fcirt.Data <- c(1,2,2,1,1,1,1,1,NA,1,2,1,1,2,1,1,2,2,NA,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
+fcirt.Data <- c(1,2,2,1,1,1,1,1,2,1,2,1,1,2,1,1,2,2,1,2,2,2,1,1,1,2,1,1,1,1,2,1,1,1,2,1,1,2,1,1)
 fcirt.Data <- matrix(fcirt.Data,nrow = 10)
 fcirt.Data
 #>       [,1] [,2] [,3] [,4]
@@ -68,7 +69,7 @@ fcirt.Data
 #>  [6,]    1    1    2    1
 #>  [7,]    1    2    1    1
 #>  [8,]    1    2    1    2
-#>  [9,]   NA   NA    1    1
+#>  [9,]    2    1    1    1
 #> [10,]    1    2    1    1
 
 # 1.2 A two-column data matrix: the first column is the statement number for statement s; the second column is the statement number for statement t.
@@ -111,25 +112,23 @@ theta <- matrix(theta, nrow=2)
 theta <- t(theta)
 # theta estimates in p*trait matrix format
 theta
-#>               [,1]         [,2]
-#>  [1,] -0.008846518 -0.020839511
-#>  [2,] -0.010909129  0.014170047
-#>  [3,]  0.039271194 -0.029510418
-#>  [4,]  0.053650150 -0.003515530
-#>  [5,] -0.014835090 -0.038893088
-#>  [6,] -0.029746453  0.003989843
-#>  [7,]  0.046490462  0.007792688
-#>  [8,]  0.027869493 -0.032391257
-#>  [9,]  0.027951501 -0.011935207
-#> [10,]  0.062773955 -0.012719476
+#>               [,1]        [,2]
+#>  [1,] -0.021775043 -0.01621198
+#>  [2,]  0.036778304 -0.04437585
+#>  [3,]  0.073992262 -0.03347397
+#>  [4,] -0.062757680  0.04176054
+#>  [5,] -0.014047680  0.10581396
+#>  [6,]  0.053138231 -0.04186083
+#>  [7,] -0.041420416  0.01026859
+#>  [8,] -0.020630012  0.02629694
+#>  [9,]  0.008953677 -0.03387754
+#> [10,] -0.049484518  0.03815921
 # 3.2 Extract the tau estimates
 tau <- extract(x=mod, pars='tau')
 tau <- tau[,1]
 tau
-#>     tau[1]     tau[2]     tau[3]     tau[4]     tau[5]     tau[6]     tau[7] 
-#> -2.0540455 -0.9805878 -1.2825280 -1.4354192 -1.7621815 -1.0457171 -1.8182223 
-#>     tau[8] 
-#> -1.0445483
+#>    tau[1]    tau[2]    tau[3]    tau[4]    tau[5]    tau[6]    tau[7]    tau[8] 
+#> -1.781350 -1.098091 -1.367964 -1.335510 -1.742235 -1.033777 -1.843409 -1.061522
 #3.3 Extract the estimates of the correlations among dimensions
 cor <- extract(x=mod, pars='cor')
 
@@ -148,13 +147,20 @@ bayesplot(x=mod, pars='alpha', plot='trace', inc_warmup=FALSE)
 <img src="man/figures/README-example-2.png" width="70%" />
 
 ``` r
+
 ## Step 5: Item information 
 # 5.1 Obtain item information for item 1-3
 OII <- information(x=mod, approach="direct", information="item", items=1:3)
 OII
-#> [1] 0.3915412 0.4035285 0.3920269
+#> [1] 0.4208212 0.4134691 0.3948281
 # 5.2 Obtain test information 
 OTI <- information(x=mod, approach="direct", information="test")
 OTI
-#> [1] 1.577941
+#> [1] 1.63136
 ```
+
+## Citation
+
+Tu, N., Joo, S., Lee, P., & Stark, S. (2025). fcirt: An R Package for
+Forced Choice Models in Item Response Theory. Applied Psychological
+Measurement, 01466216251378771.
