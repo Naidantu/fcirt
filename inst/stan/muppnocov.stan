@@ -54,12 +54,12 @@ data {
   int<lower=1> n_pair;
   int<lower=1> N;
   int<lower=1> n_dimension;
-  int<lower=0> p[n_pair, 2]; //p=pair specification map for the given pairs
-  int<lower=1, upper=2> y[N];
+  array[n_pair, 2] int<lower=0> p; //p=pair specification map for the given pairs
+  array[N] int<lower=1, upper=2> y;
   int<lower=1> I1;
   int<lower=1> J1;
-  int<lower=1, upper=I1> II[N];
-  int<lower=1, upper=J1> JJ[N];
+  array[N] int<lower=1, upper=I1> II;
+  array[N] int<lower=1, upper=J1> JJ;
 
   // user-defined priors
   real ma;
@@ -69,13 +69,13 @@ data {
   real mt;
   real vt;
 
-  int<lower=1> ind[2*N];  //pairs: 2*N  triplets: 3*N
+  array[2*N] int<lower=1> ind;  //pairs: 2*N  triplets: 3*N
   vector[n_dimension] theta_mu;
 }
 
 parameters {
 
-  vector[n_dimension] theta[n_student];
+  array[n_student] vector[n_dimension] theta;
   //matrix [n_student, n_dimension] theta;
   vector<lower=0, upper=4> [n_item] alpha;
   vector<lower=-5, upper=5> [n_item] delta;
